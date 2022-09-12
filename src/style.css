@@ -1,6 +1,5 @@
 body {
     font-family: sans-serif;
-    text-transform: uppercase;
 }
 
 table {
@@ -10,6 +9,7 @@ table {
     vertical-align: middle;
     min-width: 65%;
     margin-bottom: 1em;
+    text-transform: uppercase;
 }
 
 caption {
