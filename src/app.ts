@@ -24,7 +24,7 @@ const startApp = async () => {
 
   function next() {
     ++currentPage
-    if (response[currentPage]) populateTableData(response[currentPage])
+    if (response[currentPage]) populateTableData(response[currentPage]);
     else {
       getData(response.paging.next);
     }
@@ -32,7 +32,7 @@ const startApp = async () => {
 
   function previous() {
     --currentPage
-    if (response[currentPage]) populateTableData(response[currentPage])
+    if (response[currentPage]) populateTableData(response[currentPage]);
     else {
       getData(response.paging.previous);
     }
