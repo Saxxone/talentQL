@@ -1,4 +1,3 @@
-// @ts-ignore
 const startApp = async () => {
   const url = 'https://randomapi.com/api/8csrgnjw?key=LEIX-GF3O-AG7I-6J84';
   let response = null;
@@ -10,10 +9,12 @@ const startApp = async () => {
   const label = document.querySelector('[data-pageview]');
 
   function getData(path) {
-    fetch(path).then((response) => {
-      if (!response.ok) throw new Error('An error occurred while fetching data.');
-      return response.json();
-    }).then(data => {
+    fetch(path)
+      .then((response) => {
+        if (!response.ok)
+          throw new Error('An error occurred while fetching data.');
+        return response.json();
+      }).then(data => {
       response = data.results[0];
       populateTableData(response[currentPage]);
     }).catch(error => {
@@ -23,18 +24,15 @@ const startApp = async () => {
 
   function next() {
     ++currentPage
-    if (response[currentPage])
-      populateTableData(response[currentPage])
+    if (response[currentPage]) populateTableData(response[currentPage])
     else {
-      console.log(response.paging.next)
       getData(response.paging.next);
     }
   }
 
   function previous() {
     --currentPage
-    if (response[currentPage])
-      populateTableData(response[currentPage])
+    if (response[currentPage]) populateTableData(response[currentPage])
     else {
       getData(response.paging.previous);
     }
