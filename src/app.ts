@@ -49,6 +49,7 @@ const startApp = async () => {
 
         data.forEach((item, index) => {
             const cols = rows[index].children;
+            rows[index].setAttribute('data-entryid', item.id)
             cols[0].innerHTML = item.row;
             cols[1].innerHTML = item.gender;
             cols[2].innerHTML = item.age;
