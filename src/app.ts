@@ -43,7 +43,7 @@ const startApp = async () => {
     function populateTableData(data) {
         currentPage !== 1 ? previousButton.removeAttribute('disabled') : previousButton.setAttribute('disabled', 'true');
 
-        response.paging.next ? nextButton.removeAttribute('disabled') : nextButton.setAttribute('disabled', 'true');
+        (response.paging.next || response[currentPage + 1]) ? nextButton.removeAttribute('disabled') : nextButton.setAttribute('disabled', 'true');
 
         const rows = tableBody.children;
 
@@ -54,7 +54,7 @@ const startApp = async () => {
             cols[1].innerHTML = item.gender;
             cols[2].innerHTML = item.age;
         });
-        label.innerHTML = String(currentPage)
+        label.innerHTML = `Showing Page ${currentPage}`
     }
 
     getData(url);
