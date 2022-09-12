@@ -2,40 +2,63 @@
 const startApp = async () => {
     const url = 'https://randomapi.com/api/8csrgnjw?key=LEIX-GF3O-AG7I-6J84';
     let response = null;
+    let currentPage = 1;
+    let values = null;
     const tableBody = document.querySelector('tbody');
-    const nextButton = document.querySelectorAll('[data-foo]');
+    const previousButton = document.querySelector('[data-prevbtn]');
+    const nextButton = document.querySelector('[data-nextbtn]');
+    const label = document.querySelector('[data-pageview]');
 
-    function getData(path = url) {
-        fetch(url).then((response) => {
+    function getData(path) {
+        fetch(path).then((response) => {
             if (!response.ok) throw new Error('An error occurred while fetching data.');
             return response.json();
         }).then(data => {
             response = data.results[0];
-            populateTableData(response);
+            populateTableData(response[currentPage]);
         }).catch(error => {
             console.log(error);
         });
     }
 
-    getData();
-
     function next() {
-        getData(response.paging.next);
+        ++currentPage
+        if (response[currentPage])
+            populateTableData(response[currentPage])
+        else {
+            console.log(response.paging.next)
+            getData(response.paging.next);
+        }
     }
 
     function previous() {
-        getData(response.paging.previous);
+        --currentPage
+        if (response[currentPage])
+            populateTableData(response[currentPage])
+        else {
+            getData(response.paging.previous);
+        }
     }
 
     function populateTableData(data) {
-        let rows = tableBody.children;
-        data['1'].forEach((item, index) => {
-            let cols = rows[index].children;
+        currentPage !== 1 ? previousButton.removeAttribute('disabled') : previousButton.setAttribute('disabled', 'true');
+
+        response.paging.next ? nextButton.removeAttribute('disabled') : nextButton.setAttribute('disabled', 'true');
+
+        const rows = tableBody.children;
+
+        data.forEach((item, index) => {
+            const cols = rows[index].children;
             cols[0].innerHTML = item.row;
             cols[1].innerHTML = item.gender;
             cols[2].innerHTML = item.age;
         });
+        label.innerHTML = String(currentPage)
     }
+
+    getData(url);
+    previousButton.addEventListener('click', previous);
+    nextButton.addEventListener('click', next);
 };
 
 document.addEventListener('DOMContentLoaded', startApp);
