@@ -2,7 +2,6 @@ const startApp = async () => {
   const url = 'https://randomapi.com/api/8csrgnjw?key=LEIX-GF3O-AG7I-6J84';
   let response = null;
   let currentPage = 1;
-  let values = null;
   const tableBody = document.querySelector('tbody');
   const previousButton = document.querySelector('[data-prevbtn]');
   const nextButton = document.querySelector('[data-nextbtn]');
@@ -18,7 +17,7 @@ const startApp = async () => {
       response = data.results[0];
       populateTableData(response[currentPage]);
     }).catch(error => {
-      console.log(error);
+      alert(error.message);
     });
   }
 
